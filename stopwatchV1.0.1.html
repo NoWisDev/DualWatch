@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dual Stopwatch">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#667eea">
+    <title>Dual Stopwatch</title>
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkR1YWwgU3RvcHdhdGNoIiwKICAic2hvcnRfbmFtZSI6ICJTdG9wd2F0Y2giLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzY2N2VlYSIsCiAgInRoZW1lX2NvbG9yIjogIiM2NjdlZWEiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBeE1qZ2dNVEk0SWo0OGNtVmpkQ0IzYVdSMGFEMGlNVEk0SWlCb1pXbG5hSFE5SWpFeU9DSWdabWxzYkQwaUl6WTJOMlZsWVNJdlBqeDBaWGgwSUhnOUlqWTBJaUI1UFNJMk5DSWdabWxzYkQwaUkzZG9hWFJsSWlCbWIyNTBMV1poYldsc2VUMGlRWEpwWVd3aUlHWnZiblF0YzJsNlpUMGlORGdpSUhSbGVIUXRZVzVqYUc5eVBTSnRhV1JrYkdVaVBqRThMM1JsZUhRK1BIUmxlSFFnZUQwaU5qUWlJSGs5SWpFd05DSWdabWxzYkQwaUkzZG9hWFJsSWlCbWIyNTBMV1poYldsc2VUMGlRWEpwWVd3aUlHWnZiblF0YzJsNlpUMGlORGdpSUhSbGVIUXRZVzVqYUc5eVBTSnRhV1JrYkdVaVB6SThMM1JsZUhRK1BDOXpkbWMrIiwKICAgICAgInNpemVzIjogIjEyOHgxMjgiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NjdlZWE7c3RvcC1vcGFjaXR5OjEiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM3NjRiYTI7c3RvcC1vcGFjaXR5OjEiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgZmlsbD0idXJsKCNhKSIgcng9IjI0Ii8+PHRleHQgeD0iNjQiIHk9IjY0IiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+MTwvdGV4dD48dGV4dCB4PSI2NCIgeT0iMTA0IiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+MjwvdGV4dD48L3N2Zz4=">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            overscroll-behavior: none;
+        }
+
+        /* iOS safe area support */
+        @supports(padding: max(0px)) {
+            body {
+                padding-left: max(0px, env(safe-area-inset-left));
+                padding-right: max(0px, env(safe-area-inset-right));
+                padding-top: max(0px, env(safe-area-inset-top));
+                padding-bottom: max(0px, env(safe-area-inset-bottom));
+            }
+        }
+
+        .container {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+        }
+
+        .container.portrait {
+            flex-direction: column;
+        }
+
+        .container.landscape {
+            flex-direction: row;
+        }
+
+        .stopwatch-half {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .stopwatch-half.highlight {
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .stopwatch-half.active {
+            filter: brightness(1.1);
+        }
+
+        .stopwatch-half.inactive {
+            filter: brightness(0.7);
+        }
+
+        @keyframes pulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .label {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .label:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .label-input {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            background: rgba(255,255,255,0.3);
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 10px 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            outline: none;
+        }
+
+        .label-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .time-display {
+            font-size: 80px;
+            font-weight: bold;
+            color: white;
+            font-family: 'Courier New', monospace;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+        }
+
+        .center-button {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            transition: all 0.1s ease;
+        }
+
+        .center-button:active {
+            animation: buttonBounce 0.3s ease;
+        }
+
+        @keyframes buttonBounce {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(0.85); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .top-controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .right-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stop-button, .settings-button, .analytics-button {
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .timestamp {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .settings-modal, .analytics-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+        }
+
+        .settings-modal.show, .analytics-modal.show {
+            display: flex;
+        }
+
+        .settings-content, .analytics-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            margin: 20px;
+        }
+
+        .analytics-content {
+            max-width: 700px;
+        }
+
+        .settings-content h2, .analytics-content h2 {
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 32px;
+            text-align: center;
+        }
+
+        .settings-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .settings-section h3 {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-content label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .settings-content input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .settings-content input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .color-option {
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .color-option:hover {
+            transform: scale(1.05);
+        }
+
+        .color-option.selected {
+            border-color: #333;
+            box-shadow: 0 0 0 2px white, 0 0 0 5px #333;
+        }
+
+        .toggle-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .toggle-option label {
+            margin: 0;
+            flex: 1;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch.active {
+            background: #667eea;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active::after {
+            left: 32px;
+        }
+
+        .save-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .save-button:active {
+            transform: translateY(0);
+        }
+
+        .analytics-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .history-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .history-section h3 {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .session-entry {
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .session-date {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .session-duration {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .session-times {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .time-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .time-entry .name {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .time-entry .time {
+            color: #667eea;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .clear-history-btn {
+            width: 100%;
+            padding: 12px;
+            background: #ff4b4b;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .clear-history-btn:hover {
+            background: #ff3333;
+        }
+
+        .no-history {
+            text-align: center;
+            color: #888;
+            padding: 40px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .time-display {
+                font-size: 56px;
+            }
+            .label, .label-input {
+                font-size: 22px;
+            }
+            .center-button {
+                padding: 15px 30px;
+                font-size: 20px;
+            }
+            .settings-content, .analytics-content {
+                padding: 25px;
+            }
+            .color-grid {
+                grid-template-columns: 1fr;
+            }
+            .analytics-summary {
+                grid-template-columns: 1fr;
+            }
+            .session-times {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-controls">
+        <button class="stop-button" id="stopBtn" style="display: none;">STOP</button>
+        <div class="timestamp" id="timestamp"></div>
+        <div class="right-controls">
+            <button class="analytics-button" id="analyticsBtn">📊</button>
+            <button class="settings-button" id="settingsBtn">⚙️</button>
+        </div>
+    </div>
+
+    <div class="container portrait" id="container">
+        <div class="stopwatch-half top" id="stopwatch1" data-stopwatch="1">
+            <div class="label" id="label1">Stopwatch 1</div>
+            <div class="time-display" id="time1">00</div>
+        </div>
+        <div class="stopwatch-half bottom" id="stopwatch2" data-stopwatch="2">
+            <div class="label" id="label2">Stopwatch 2</div>
+            <div class="time-display" id="time2">00</div>
+        </div>
+    </div>
+
+    <button class="center-button" id="centerBtn">START</button>
+
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <h2>⚙️ Settings</h2>
+            
+            <div class="settings-section">
+                <h3>🏷️ Names</h3>
+                <label for="name1">Stopwatch 1 Name:</label>
+                <input type="text" id="name1" value="Stopwatch 1">
+                <label for="name2">Stopwatch 2 Name:</label>
+                <input type="text" id="name2" value="Stopwatch 2">
+            </div>
+
+            <div class="settings-section">
+                <h3>🎨 Color Scheme</h3>
+                <div class="color-grid">
+                    <div class="color-option selected" data-scheme="purple" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        Purple Dream
+                    </div>
+                    <div class="color-option" data-scheme="ocean" style="background: linear-gradient(135deg, #2E3192 0%, #1BFFFF 100%);">
+                        Ocean Blue
+                    </div>
+                    <div class="color-option" data-scheme="sunset" style="background: linear-gradient(135deg, #FF512F 0%, #F09819 100%);">
+                        Sunset Orange
+                    </div>
+                    <div class="color-option" data-scheme="forest" style="background: linear-gradient(135deg, #134E5E 0%, #71B280 100%);">
+                        Forest Green
+                    </div>
+                    <div class="color-option" data-scheme="candy" style="background: linear-gradient(135deg, #FFB6B9 0%, #FEC7D7 100%);">
+                        Cotton Candy
+                    </div>
+                    <div class="color-option" data-scheme="midnight" style="background: linear-gradient(135deg, #232526 0%, #414345 100%);">
+                        Midnight
+                    </div>
+                    <div class="color-option" data-scheme="fire" style="background: linear-gradient(135deg, #8E0E00 0%, #1F1C18 100%);">
+                        Fire & Ice
+                    </div>
+                    <div class="color-option" data-scheme="neon" style="background: linear-gradient(135deg, #00F260 0%, #0575E6 100%);">
+                        Neon Lights
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>⏱️ Display Options</h3>
+                <div class="toggle-option">
+                    <label>Show Centiseconds (00:00:00.00)</label>
+                    <div class="toggle-switch" id="centiToggle"></div>
+                </div>
+                <div class="toggle-option">
+                    <label>Show Seconds in Timestamp</label>
+                    <div class="toggle-switch active" id="timestampToggle"></div>
+                </div>
+            </div>
+
+            <button class="save-button" id="saveSettings">Save Settings</button>
+        </div>
+    </div>
+
+    <div class="analytics-modal" id="analyticsModal">
+        <div class="analytics-content">
+            <h2>📊 Analytics</h2>
+            
+            <div class="analytics-summary" id="analyticsSummary">
+                <div class="stat-card">
+                    <h3>Total Sessions</h3>
+                    <div class="stat-value" id="totalSessions">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Time</h3>
+                    <div class="stat-value" id="totalTime">0:00</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Session</h3>
+                    <div class="stat-value" id="avgSession">0:00</div>
+                </div>
+            </div>
+
+            <div class="history-section">
+                <h3>📜 Session History</h3>
+                <div id="historyList"></div>
+            </div>
+
+            <button class="clear-history-btn" id="clearHistoryBtn">Clear All History</button>
+        </div>
+    </div>
+
+    <script>
+        // Register service worker for offline support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    self.addEventListener('install', (e) => {
+                        e.waitUntil(
+                            caches.open('dual-stopwatch-v1').then((cache) => {
+                                return cache.addAll(['/']);
+                            })
+                        );
+                    });
+                    
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(
+                            caches.match(e.request).then((response) => {
+                                return response || fetch(e.request);
+                            })
+                        );
+                    });
+                `;
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swUrl).catch(() => {
+                    // Service worker registration failed, app will still work
+                });
+            });
+        }
+
+        let state = 'initial';
+        let activeStopwatch = null;
+        let startTime = null;
+        let times = { 1: 0, 2: 0 };
+        let currentStart = null;
+        let animationFrame = null;
+        let showCentiseconds = false;
+        let showTimestampSeconds = true;
+        let currentScheme = 'purple';
+        let sessionHistory = [];
+
+        const colorSchemes = {
+            purple: {
+                top: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                bottom: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+            },
+            ocean: {
+                top: 'linear-gradient(135deg, #2E3192 0%, #1BFFFF 100%)',
+                bottom: 'linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)'
+            },
+            sunset: {
+                top: 'linear-gradient(135deg, #FF512F 0%, #F09819 100%)',
+                bottom: 'linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%)'
+            },
+            forest: {
+                top: 'linear-gradient(135deg, #134E5E 0%, #71B280 100%)',
+                bottom: 'linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)'
+            },
+            candy: {
+                top: 'linear-gradient(135deg, #FFB6B9 0%, #FEC7D7 100%)',
+                bottom: 'linear-gradient(135deg, #FAD0C4 0%, #FFD1FF 100%)'
+            },
+            midnight: {
+                top: 'linear-gradient(135deg, #232526 0%, #414345 100%)',
+                bottom: 'linear-gradient(135deg, #0F2027 0%, #203A43 100%)'
+            },
+            fire: {
+                top: 'linear-gradient(135deg, #8E0E00 0%, #1F1C18 100%)',
+                bottom: 'linear-gradient(135deg, #C33764 0%, #1D2671 100%)'
+            },
+            neon: {
+                top: 'linear-gradient(135deg, #00F260 0%, #0575E6 100%)',
+                bottom: 'linear-gradient(135deg, #B721FF 0%, #21D4FD 100%)'
+            }
+        };
+
+        const container = document.getElementById('container');
+        const stopwatch1 = document.getElementById('stopwatch1');
+        const stopwatch2 = document.getElementById('stopwatch2');
+        const centerBtn = document.getElementById('centerBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const timestamp = document.getElementById('timestamp');
+        const time1 = document.getElementById('time1');
+        const time2 = document.getElementById('time2');
+        const label1 = document.getElementById('label1');
+        const label2 = document.getElementById('label2');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const name1Input = document.getElementById('name1');
+        const name2Input = document.getElementById('name2');
+        const saveSettingsBtn = document.getElementById('saveSettings');
+        const centiToggle = document.getElementById('centiToggle');
+        const timestampToggle = document.getElementById('timestampToggle');
+        const analyticsBtn = document.getElementById('analyticsBtn');
+        const analyticsModal = document.getElementById('analyticsModal');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+        function loadState() {
+            const saved = {
+                names: [
+                    localStorage.getItem('name1') || 'Stopwatch 1',
+                    localStorage.getItem('name2') || 'Stopwatch 2'
+                ],
+                scheme: localStorage.getItem('colorScheme') || 'purple',
+                showCenti: localStorage.getItem('showCentiseconds') === 'true',
+                showTsSeconds: localStorage.getItem('showTimestampSeconds') !== 'false',
+                times: [
+                    parseInt(localStorage.getItem('time1')) || 0,
+                    parseInt(localStorage.getItem('time2')) || 0
+                ],
+                state: localStorage.getItem('state') || 'initial',
+                activeWatch: localStorage.getItem('activeStopwatch') ? parseInt(localStorage.getItem('activeStopwatch')) : null,
+                startTimestamp: localStorage.getItem('startTimestamp') || null,
+                currentStart: localStorage.getItem('currentStart') || null  // <-- NEW
+            };
+
+            // Load history if available
+            const historyData = localStorage.getItem('sessionHistory');
+            if (historyData) {
+                try {
+                    sessionHistory = JSON.parse(historyData);
+                } catch (e) {
+                    sessionHistory = [];
+                }
+            }
+
+            // Apply names
+            label1.textContent = saved.names[0];
+            label2.textContent = saved.names[1];
+            name1Input.value = saved.names[0];
+            name2Input.value = saved.names[1];
+
+            // Apply color scheme
+            currentScheme = saved.scheme;
+            applyColorScheme(currentScheme);
+            document.querySelectorAll('.color-option').forEach(opt => {
+                opt.classList.toggle('selected', opt.dataset.scheme === currentScheme);
+            });
+
+            // Apply toggles
+            showCentiseconds = saved.showCenti;
+            showTimestampSeconds = saved.showTsSeconds;
+            centiToggle.classList.toggle('active', showCentiseconds);
+            timestampToggle.classList.toggle('active', showTimestampSeconds);
+
+            // Restore stopwatch times
+            times[1] = saved.times[0];
+            times[2] = saved.times[1];
+
+            // If it was running when the page closed, add elapsed offline time
+            if (saved.state === 'running' && saved.activeWatch && saved.currentStart) {
+                const elapsed = Date.now() - parseInt(saved.currentStart, 10);
+                times[saved.activeWatch] += elapsed;
+            }
+
+            // Update displays
+            time1.textContent = formatTime(times[1]);
+            time2.textContent = formatTime(times[2]);
+
+            // Restore state
+            state = saved.state;
+            activeStopwatch = saved.activeWatch;
+
+            if (saved.startTimestamp) {
+                startTime = new Date(saved.startTimestamp);
+                updateTimestamp();
+            }
+
+            // If it was running, set UI to reflect that
+            if (state === 'running' && activeStopwatch) {
+                centerBtn.textContent = 'SWITCH';
+                stopBtn.style.display = 'block';
+                stopBtn.textContent = 'STOP';
+                currentStart = Date.now(); // restart timing base
+
+                if (activeStopwatch === 1) {
+                    stopwatch1.classList.add('active');
+                    stopwatch2.classList.add('inactive');
+                } else {
+                    stopwatch2.classList.add('active');
+                    stopwatch1.classList.add('inactive');
+                }
+
+                updateDisplay();
+            } else if (state === 'stopped') {
+                centerBtn.textContent = 'SWITCH';
+                stopBtn.style.display = 'block';
+                stopBtn.textContent = 'RESET';
+
+                if (activeStopwatch === 1) {
+                    stopwatch1.classList.add('active');
+                    stopwatch2.classList.add('inactive');
+                } else if (activeStopwatch === 2) {
+                    stopwatch2.classList.add('active');
+                    stopwatch1.classList.add('inactive');
+                }
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('name1', label1.textContent);
+            localStorage.setItem('name2', label2.textContent);
+            localStorage.setItem('colorScheme', currentScheme);
+            localStorage.setItem('showCentiseconds', showCentiseconds);
+            localStorage.setItem('showTimestampSeconds', showTimestampSeconds);
+            localStorage.setItem('time1', times[1]);
+            localStorage.setItem('time2', times[2]);
+            localStorage.setItem('state', state);
+            localStorage.setItem('activeStopwatch', activeStopwatch || '');
+            localStorage.setItem('startTimestamp', startTime ? startTime.toISOString() : '');
+            localStorage.setItem('sessionHistory', JSON.stringify(sessionHistory));
+
+            // ⬅ NEW
+            if (state === 'running' && currentStart) {
+                localStorage.setItem('currentStart', currentStart);
+            } else {
+                localStorage.removeItem('currentStart');
+            }
+        }
+
+        function checkOrientation() {
+            if (window.innerHeight > window.innerWidth) {
+                container.className = 'container portrait';
+            } else {
+                container.className = 'container landscape';
+            }
+        }
+
+        window.addEventListener('resize', checkOrientation);
+        checkOrientation();
+
+        function formatTime(ms) {
+            const totalMs = ms;
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            const centiseconds = Math.floor((totalMs % 1000) / 10);
+            
+            let timeStr = '';
+            
+            if (hours > 0) {
+                timeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else if (minutes > 0) {
+                timeStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else {
+                timeStr = `${String(seconds).padStart(2, '0')}`;
+            }
+            
+            if (showCentiseconds) {
+                timeStr += `.${String(centiseconds).padStart(2, '0')}`;
+            }
+            
+            return timeStr;
+        }
+
+        function updateDisplay() {
+            if (activeStopwatch && currentStart) {
+                times[activeStopwatch] += Date.now() - currentStart;
+                currentStart = Date.now();
+            }
+            time1.textContent = formatTime(times[1]);
+            time2.textContent = formatTime(times[2]);
+            saveState();
+            if (state === 'running') {
+                animationFrame = requestAnimationFrame(updateDisplay);
+            }
+        }
+
+        function updateTimestamp() {
+            if (startTime) {
+                const options = showTimestampSeconds 
+                    ? { hour: '2-digit', minute: '2-digit', second: '2-digit' }
+                    : { hour: '2-digit', minute: '2-digit' };
+                timestamp.textContent = startTime.toLocaleTimeString([], options);
+            }
+        }
+
+        function applyColorScheme(scheme) {
+            stopwatch1.style.background = colorSchemes[scheme].top;
+            stopwatch2.style.background = colorSchemes[scheme].bottom;
+        }
+
+        function makeLabelEditable(labelElement, inputElement, stopwatchNum) {
+            labelElement.addEventListener('click', function(e) {
+                if (state === 'selecting' || state === 'running') return;
+                e.stopPropagation();
+                
+                const currentText = labelElement.textContent;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'label-input';
+                input.value = currentText;
+                input.maxLength = 20;
+                
+                labelElement.style.display = 'none';
+                labelElement.parentNode.insertBefore(input, labelElement);
+                input.focus();
+                input.select();
+                
+                function finishEdit() {
+                    const newValue = input.value.trim() || `Stopwatch ${stopwatchNum}`;
+                    labelElement.textContent = newValue;
+                    inputElement.value = newValue;
+                    input.remove();
+                    labelElement.style.display = 'block';
+                    saveState();
+                }
+                
+                input.addEventListener('blur', finishEdit);
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        finishEdit();
+                    }
+                });
+            });
+        }
+
+        makeLabelEditable(label1, name1Input, 1);
+        makeLabelEditable(label2, name2Input, 2);
+
+        centerBtn.addEventListener('click', function() {
+            if (state === 'initial') {
+                state = 'selecting';
+                centerBtn.textContent = 'SELECT';
+                stopwatch1.classList.add('highlight');
+                stopwatch2.classList.add('highlight');
+                startTime = new Date();
+                updateTimestamp();
+                saveState();
+            } else if (state === 'running') {
+                if (activeStopwatch) {
+                    times[activeStopwatch] += Date.now() - currentStart;
+                    activeStopwatch = activeStopwatch === 1 ? 2 : 1;
+                    currentStart = Date.now();
+                    
+                    if (activeStopwatch === 1) {
+                        stopwatch1.classList.add('active');
+                        stopwatch1.classList.remove('inactive');
+                        stopwatch2.classList.add('inactive');
+                        stopwatch2.classList.remove('active');
+                    } else {
+                        stopwatch2.classList.add('active');
+                        stopwatch2.classList.remove('inactive');
+                        stopwatch1.classList.add('inactive');
+                        stopwatch1.classList.remove('active');
+                    }
+                    saveState();
+                }
+            }
+        });
+
+        stopwatch1.addEventListener('click', function() {
+            if (state === 'selecting') {
+                startStopwatch(1);
+            }
+        });
+
+        stopwatch2.addEventListener('click', function() {
+            if (state === 'selecting') {
+                startStopwatch(2);
+            }
+        });
+
+        function startStopwatch(num) {
+            state = 'running';
+            activeStopwatch = num;
+            currentStart = Date.now();
+            centerBtn.textContent = 'SWITCH';
+            stopBtn.style.display = 'block';
+            stopBtn.textContent = 'STOP';
+            stopwatch1.classList.remove('highlight');
+            stopwatch2.classList.remove('highlight');
+            
+            if (num === 1) {
+                stopwatch1.classList.add('active');
+                stopwatch2.classList.add('inactive');
+            } else {
+                stopwatch2.classList.add('active');
+                stopwatch1.classList.add('inactive');
+            }
+            
+            saveState();
+            updateDisplay();
+        }
+
+        stopBtn.addEventListener('click', function() {
+            if (state === 'running') {
+                state = 'stopped';
+                if (activeStopwatch && currentStart) {
+                    times[activeStopwatch] += Date.now() - currentStart;
+                    currentStart = null;
+                }
+                stopBtn.textContent = 'RESET';
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                }
+                time1.textContent = formatTime(times[1]);
+                time2.textContent = formatTime(times[2]);
+                saveState();
+            } else if (state === 'stopped') {
+                saveSessionToHistory();
+                
+                state = 'initial';
+                activeStopwatch = null;
+                currentStart = null;
+                times = { 1: 0, 2: 0 };
+                centerBtn.textContent = 'START';
+                stopBtn.style.display = 'none';
+                timestamp.textContent = '';
+                time1.textContent = showCentiseconds ? '00.00' : '00';
+                time2.textContent = showCentiseconds ? '00.00' : '00';
+                stopwatch1.classList.remove('active', 'inactive');
+                stopwatch2.classList.remove('active', 'inactive');
+                saveState();
+            }
+        });
+
+        function saveSessionToHistory() {
+            if (times[1] === 0 && times[2] === 0) return;
+            
+            const session = {
+                date: startTime ? startTime.toISOString() : new Date().toISOString(),
+                name1: label1.textContent,
+                name2: label2.textContent,
+                time1: times[1],
+                time2: times[2],
+                totalTime: times[1] + times[2]
+            };
+            
+            sessionHistory.unshift(session);
+            
+            if (sessionHistory.length > 50) {
+                sessionHistory = sessionHistory.slice(0, 50);
+            }
+            
+            saveState();
+        }
+
+        settingsBtn.addEventListener('click', function() {
+            settingsModal.classList.add('show');
+        });
+
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        centiToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+
+        timestampToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+
+        saveSettingsBtn.addEventListener('click', function() {
+            label1.textContent = name1Input.value || 'Stopwatch 1';
+            label2.textContent = name2Input.value || 'Stopwatch 2';
+            
+            const selectedScheme = document.querySelector('.color-option.selected').dataset.scheme;
+            currentScheme = selectedScheme;
+            applyColorScheme(currentScheme);
+            
+            showCentiseconds = centiToggle.classList.contains('active');
+            showTimestampSeconds = timestampToggle.classList.contains('active');
+            
+            if (state === 'initial') {
+                time1.textContent = showCentiseconds ? '00.00' : '00';
+                time2.textContent = showCentiseconds ? '00.00' : '00';
+            } else {
+                time1.textContent = formatTime(times[1]);
+                time2.textContent = formatTime(times[2]);
+            }
+            
+            updateTimestamp();
+            saveState();
+            
+            settingsModal.classList.remove('show');
+        });
+
+        settingsModal.addEventListener('click', function(e) {
+            if (e.target === settingsModal) {
+                settingsModal.classList.remove('show');
+            }
+        });
+
+        analyticsBtn.addEventListener('click', function() {
+            renderAnalytics();
+            analyticsModal.classList.add('show');
+        });
+
+        analyticsModal.addEventListener('click', function(e) {
+            if (e.target === analyticsModal) {
+                analyticsModal.classList.remove('show');
+            }
+        });
+
+        clearHistoryBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all history? This cannot be undone.')) {
+                sessionHistory = [];
+                saveState();
+                renderAnalytics();
+            }
+        });
+
+        function renderAnalytics() {
+            const totalSessions = sessionHistory.length;
+            const totalTimeMs = sessionHistory.reduce((sum, s) => sum + s.totalTime, 0);
+            const avgTimeMs = totalSessions > 0 ? totalTimeMs / totalSessions : 0;
+
+            document.getElementById('totalSessions').textContent = totalSessions;
+            document.getElementById('totalTime').textContent = formatTime(totalTimeMs);
+            document.getElementById('avgSession').textContent = formatTime(avgTimeMs);
+
+            const historyList = document.getElementById('historyList');
+            
+            if (sessionHistory.length === 0) {
+                historyList.innerHTML = '<div class="no-history">No sessions recorded yet. Start using your stopwatch!</div>';
+                return;
+            }
+
+            historyList.innerHTML = sessionHistory.map(session => {
+                const sessionDate = new Date(session.date);
+                const dateStr = sessionDate.toLocaleDateString([], { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                });
+                const timeStr = sessionDate.toLocaleTimeString([], { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+
+                return `
+                    <div class="session-entry">
+                        <div class="session-header">
+                            <span class="session-date">${dateStr} at ${timeStr}</span>
+                            <span class="session-duration">Total: ${formatTime(session.totalTime)}</span>
+                        </div>
+                        <div class="session-times">
+                            <div class="time-entry">
+                                <span class="name">${session.name1}</span>
+                                <span class="time">${formatTime(session.time1)}</span>
+                            </div>
+                            <div class="time-entry">
+                                <span class="name">${session.name2}</span>
+                                <span class="time">${formatTime(session.time2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        applyColorScheme(currentScheme);
+        loadState();
+    </script>
+</body>
+</html>
