@@ -3,65 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="icon" type="image/png" href="icon.png">
-    <style>
-        input[type="number"] {
-            /* Add your CSS styles for number input here */
-        }
-        .min-duration-input {
-            /* Add styles for min-duration-input here */
-        }
-        .min-duration-input.disabled {
-            /* Add styles for disabled state here */
-        }
-        .delete-session-btn {
-            /* Add styles for delete session button here */
-        }
-        .session-entry {
-            position: relative;
-            /* Other styles */
-        }
-    </style>
+    <meta name="description" content="Dual Stopwatch PWA">
+    <link rel="stylesheet" href="styles.css">
     <title>Dual Stopwatch</title>
 </head>
 <body>
-    <div>
-        <h2>Session Saving Settings</h2>
-        <label for="min-duration-toggle">Minimum Duration:</label>
-        <input type="checkbox" id="min-duration-toggle">
-        <input type="number" id="min-duration-input" placeholder="Set minimum duration">
+    <div id="stopwatch">
+        <!-- Stopwatch UI Elements -->
+        <div id="timer">00:00:00</div>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <button id="reset">Reset</button>
     </div>
-    <script src="sw.js"></script>
-    <script>
-        let minDurationEnabled = false;
-        let minDurationMinutes = 0;
+    
+    <div id="settings-modal">
+        <h2>Settings</h2>
+        <label for="min-duration">Minimum Duration:</label>
+        <input type="number" id="min-duration" value="0" min="0">
+        <button id="save-settings">Save</button>
+    </div>
 
-        function loadState() {
-            // Load state and check minimum duration settings
-        }
+    <div id="analytics-modal">
+        <h2>Analytics</h2>
+        <button id="delete-sessions">Delete Session</button>
+    </div>
 
-        function saveState() {
-            // Save state and include minimum duration settings
-        }
-
-        function saveSession() {
-            // Check minimum duration before saving session
-        }
-
-        function deleteSession() {
-            // Functionality to delete session
-        }
-
-        function renderAnalytics() {
-            // Render analytics and show delete buttons
-        }
-
-        document.getElementById('min-duration-toggle').addEventListener('change', function() {
-            minDurationEnabled = this.checked;
-            // Additional event handling for minimum duration toggle
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
