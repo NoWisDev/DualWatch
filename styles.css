@@ -1,24 +1,30 @@
-:root {
-    --vh: 100vh;
-    --dvh: 100dvh; /* Added for iOS */
+.body {
+    height: 100vh;
+    height: 100dvh; /* New line added */
 }
 
-.orientation-class {
-    /* Existing styles */
-    /* Adding !important to orientation classes */
-    property: value !important; /* Replace with actual properties */
+.container {
+    height: 100vh;
+    height: 100dvh; /* New line added */
+}
+
+.container.portrait {
+    flex-direction: column !important; /* Updated line */
+}
+
+.container.landscape {
+    flex-direction: row !important; /* Updated line */
 }
 
 .left-controls {
-    /* Creating .left-controls container style */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px; /* Example styling */
+    gap: 10px;
+    align-items: center; /* New styling added */
 }
 
 timestamp {
-    /* Removing absolute positioning from .timestamp */
-    position: static; /* Changed from absolute to static */
-    /* Other existing styles */
+    /* Previous absolute positioning removed */
+    /* Other styles retained */
 }
+
+/* All other existing CSS remains unchanged */
