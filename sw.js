@@ -1,4 +1,5 @@
-const CACHE_NAME = 'dual-stopwatch-v2.0.1'; // Increment this version number when you make updates
+const CACHE_VERSION = 'v2.0.2'; // Change this when you make updates
+const CACHE_NAME = `dual-stopwatch-${CACHE_VERSION}`;
 const urlsToCache = [
   './',
   './index.html',
@@ -8,41 +9,42 @@ const urlsToCache = [
   './icon.png'
 ];
 
-// Install event - cache files
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll(urlsToCache);
-      })
+      .then((cache) => cache.addAll(urlsToCache))
   );
-  // Force the waiting service worker to become the active service worker
   self.skipWaiting();
 });
 
-// Fetch event - network first, fall back to cache
 self.addEventListener('fetch', (event) => {
+  // Special handling for version requests
+  if (event.request.url.includes('get-version')) {
+    event.respondWith(
+      new Response(JSON.stringify({ version: CACHE_VERSION }), {
+        headers: { 'Content-Type': 'application/json' }
+      })
+    );
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // If we got a valid response, clone it and update the cache
         if (response && response.status === 200) {
           const responseToCache = response.clone();
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
         }
         return response;
       })
       .catch(() => {
-        // If network fails, try to get from cache
         return caches.match(event.request);
       })
   );
 });
 
-// Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -55,15 +57,7 @@ self.addEventListener('activate', (event) => {
         })
       );
     }).then(() => {
-      // Claim all clients immediately
       return self.clients.claim();
     })
   );
-});
-
-// Listen for messages from the client
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
 });
