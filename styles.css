@@ -14,7 +14,7 @@ body {
     width: 100vw;
     min-height: calc(100% + env(safe-area-inset-top));
     position: fixed;
-    bottom: calc(0 - 2*env(safe-area-inset-top));
+    bottom: calc(0 - 4*env(safe-area-inset-top));
     overscroll-behavior: none;
 }
 
@@ -22,6 +22,8 @@ body {
     height: 100vh;
     height: 100dvh;
     width: 100vw;
+    position: fixed;
+    bottom: calc(0 - 4*env(safe-area-inset-top));
     /*min-height: calc(100% + /*2*env(safe-area-inset-top));*/
     display: flex;
 }
