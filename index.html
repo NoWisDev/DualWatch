@@ -3,29 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dual Stopwatch PWA">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles.css">
     <title>Dual Stopwatch</title>
 </head>
 <body>
-    <div id="stopwatch">
-        <!-- Stopwatch UI Elements -->
-        <div id="timer">00:00:00</div>
-        <button id="start">Start</button>
-        <button id="stop">Stop</button>
-        <button id="reset">Reset</button>
-    </div>
-    
-    <div id="settings-modal">
-        <h2>Settings</h2>
-        <label for="min-duration">Minimum Duration:</label>
-        <input type="number" id="min-duration" value="0" min="0">
-        <button id="save-settings">Save</button>
+    <div id="app">
+        <h1>Dual Stopwatch</h1>
+        <div class="stopwatch-container">
+            <div class="stopwatch" id="stopwatch1">
+                <h2>Stopwatch 1</h2>
+                <div class="display" id="display1">00:00:00</div>
+                <button id="start1">Start</button>
+                <button id="stop1">Stop</button>
+                <button id="reset1">Reset</button>
+            </div>
+            <div class="stopwatch" id="stopwatch2">
+                <h2>Stopwatch 2</h2>
+                <div class="display" id="display2">00:00:00</div>
+                <button id="start2">Start</button>
+                <button id="stop2">Stop</button>
+                <button id="reset2">Reset</button>
+            </div>
+        </div>
+        <button id="settingsButton">Settings</button>
+        <button id="analyticsButton">Analytics</button>
     </div>
 
-    <div id="analytics-modal">
-        <h2>Analytics</h2>
-        <button id="delete-sessions">Delete Session</button>
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeSettings">&times;</span>
+            <h2>Settings</h2>
+            <label for="minDuration">Minimum Duration:</label>
+            <input type="checkbox" id="minDuration">
+            <button id="saveSettings">Save</button>
+        </div>
+    </div>
+
+    <div id="analyticsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeAnalytics">&times;</span>
+            <h2>Analytics</h2>
+            <button class="deleteSession" id="deleteSession1">Delete Session 1</button>
+            <button class="deleteSession" id="deleteSession2">Delete Session 2</button>
+        </div>
     </div>
 
     <script src="app.js"></script>
