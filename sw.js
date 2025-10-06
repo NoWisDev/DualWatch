@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dual-stopwatch-v2'; // Increment this version number when you make updates
+const CACHE_NAME = 'dual-stopwatch-v2.0.1'; // Increment this version number when you make updates
 const urlsToCache = [
   './',
   './index.html',
