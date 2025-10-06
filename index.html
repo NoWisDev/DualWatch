@@ -2,51 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#000000">
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dual Stopwatch">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#667eea">
     <title>Dual Stopwatch</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app">
-        <h1>Dual Stopwatch</h1>
-        <div class="stopwatch-container">
-            <div class="stopwatch" id="stopwatch1">
-                <h2>Stopwatch 1</h2>
-                <div class="display" id="display1">00:00:00</div>
-                <button id="start1">Start</button>
-                <button id="stop1">Stop</button>
-                <button id="reset1">Reset</button>
-            </div>
-            <div class="stopwatch" id="stopwatch2">
-                <h2>Stopwatch 2</h2>
-                <div class="display" id="display2">00:00:00</div>
-                <button id="start2">Start</button>
-                <button id="stop2">Stop</button>
-                <button id="reset2">Reset</button>
-            </div>
-        </div>
-        <button id="settingsButton">Settings</button>
-        <button id="analyticsButton">Analytics</button>
-    </div>
-
-    <div id="settingsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeSettings">&times;</span>
-            <h2>Settings</h2>
-            <label for="minDuration">Minimum Duration:</label>
-            <input type="checkbox" id="minDuration">
-            <button id="saveSettings">Save</button>
+    <div class="top-controls">
+        <button class="stop-button" id="stopBtn" style="display: none;">STOP</button>
+        <div class="timestamp" id="timestamp"></div>
+        <div class="right-controls">
+            <button class="analytics-button" id="analyticsBtn">📊</button>
+            <button class="settings-button" id="settingsBtn">⚙️</button>
         </div>
     </div>
 
-    <div id="analyticsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeAnalytics">&times;</span>
-            <h2>Analytics</h2>
-            <button class="deleteSession" id="deleteSession1">Delete Session 1</button>
-            <button class="deleteSession" id="deleteSession2">Delete Session 2</button>
+    <div class="container portrait" id="container">
+        <div class="stopwatch-half top" id="stopwatch1" data-stopwatch="1">
+            <div class="label" id="label1">Stopwatch 1</div>
+            <div class="time-display" id="time1">00</div>
+        </div>
+        <div class="stopwatch-half bottom" id="stopwatch2" data-stopwatch="2">
+            <div class="label" id="label2">Stopwatch 2</div>
+            <div class="time-display" id="time2">00</div>
+        </div>
+    </div>
+
+    <button class="center-button" id="centerBtn">START</button>
+
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <h2>⚙️ Settings</h2>
+            
+            <div class="settings-section">
+                <h3>🏷️ Names</h3>
+                <label for="name1">Stopwatch 1 Name:</label>
+                <input type="text" id="name1" value="Stopwatch 1">
+                <label for="name2">Stopwatch 2 Name:</label>
+                <input type="text" id="name2" value="Stopwatch 2">
+            </div>
+
+            <div class="settings-section">
+                <h3>🎨 Color Scheme</h3>
+                <div class="color-grid">
+                    <div class="color-option selected" data-scheme="purple" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        Purple Dream
+                    </div>
+                    <div class="color-option" data-scheme="ocean" style="background: linear-gradient(135deg, #2E3192 0%, #1BFFFF 100%);">
+                        Ocean Blue
+                    </div>
+                    <div class="color-option" data-scheme="sunset" style="background: linear-gradient(135deg, #FF512F 0%, #F09819 100%);">
+                        Sunset Orange
+                    </div>
+                    <div class="color-option" data-scheme="forest" style="background: linear-gradient(135deg, #134E5E 0%, #71B280 100%);">
+                        Forest Green
+                    </div>
+                    <div class="color-option" data-scheme="candy" style="background: linear-gradient(135deg, #FFB6B9 0%, #FEC7D7 100%);">
+                        Cotton Candy
+                    </div>
+                    <div class="color-option" data-scheme="midnight" style="background: linear-gradient(135deg, #232526 0%, #414345 100%);">
+                        Midnight
+                    </div>
+                    <div class="color-option" data-scheme="fire" style="background: linear-gradient(135deg, #8E0E00 0%, #1F1C18 100%);">
+                        Fire & Ice
+                    </div>
+                    <div class="color-option" data-scheme="neon" style="background: linear-gradient(135deg, #00F260 0%, #0575E6 100%);">
+                        Neon Lights
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>⏱️ Display Options</h3>
+                <div class="toggle-option">
+                    <label>Show Centiseconds (00:00:00.00)</label>
+                    <div class="toggle-switch" id="centiToggle"></div>
+                </div>
+                <div class="toggle-option">
+                    <label>Show Seconds in Timestamp</label>
+                    <div class="toggle-switch active" id="timestampToggle"></div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>💾 Session Saving</h3>
+                <div class="toggle-option">
+                    <label>Only save sessions longer than minimum duration</label>
+                    <div class="toggle-switch" id="minDurationToggle"></div>
+                </div>
+                <div class="min-duration-input disabled" id="minDurationInputWrapper">
+                    <label for="minDurationValue">Minimum duration (minutes):</label>
+                    <input type="number" id="minDurationValue" min="1" max="999" value="5">
+                </div>
+            </div>
+
+            <button class="save-button" id="saveSettings">Save Settings</button>
+        </div>
+    </div>
+
+    <div class="analytics-modal" id="analyticsModal">
+        <div class="analytics-content">
+            <h2>📊 Analytics</h2>
+            
+            <div class="analytics-summary" id="analyticsSummary">
+                <div class="stat-card">
+                    <h3>Total Sessions</h3>
+                    <div class="stat-value" id="totalSessions">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Time</h3>
+                    <div class="stat-value" id="totalTime">0:00</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Session</h3>
+                    <div class="stat-value" id="avgSession">0:00</div>
+                </div>
+            </div>
+
+            <div class="history-section">
+                <h3>📜 Session History</h3>
+                <div id="historyList"></div>
+            </div>
+
+            <button class="clear-history-btn" id="clearHistoryBtn">Clear All History</button>
         </div>
     </div>
 
