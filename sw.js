@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v2.0.3'; // Change this when you make updates
+const CACHE_VERSION = 'v2.0.4'; // Change this when you make updates
 const CACHE_NAME = `dual-stopwatch-${CACHE_VERSION}`;
 const urlsToCache = [
   './',
