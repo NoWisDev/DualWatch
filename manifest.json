@@ -1,6 +1,6 @@
 {
-  "name": "Dual Stopwatch",
-  "short_name": "Stopwatch",
+  "name": "DualWatch",
+  "short_name": "DualWatch",
   "description": "A dual stopwatch app for tracking two activities simultaneously",
   "start_url": ".",
   "display": "standalone",

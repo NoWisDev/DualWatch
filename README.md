@@ -1,2 +1,2 @@
-# DualStopwatch
+# DualWatch
 A dual stopwatch
