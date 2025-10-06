@@ -83,6 +83,30 @@ const minDurationToggle = document.getElementById('minDurationToggle');
 const minDurationInputWrapper = document.getElementById('minDurationInputWrapper');
 const minDurationValue = document.getElementById('minDurationValue');
 
+async function getAppVersion() {
+    try {
+        const response = await fetch('./get-version');
+        const data = await response.json();
+        return data.version;
+    } catch (error) {
+        // Fallback: parse from cache name
+        const cacheNames = await caches.keys();
+        if (cacheNames.length > 0) {
+            const match = cacheNames[0].match(/dual-stopwatch-(v[\d.]+)/);
+            return match ? match[1] : 'Unknown';
+        }
+        return 'Unknown';
+    }
+}
+
+async function displayVersion() {
+    const version = await getAppVersion();
+    const versionElement = document.getElementById('appVersion');
+    if (versionElement) {
+        versionElement.textContent = version;
+    }
+}
+
 function loadState() {
     const saved = {
         names: [
@@ -508,6 +532,7 @@ function renderAnalytics() {
 }
 
 settingsBtn.addEventListener('click', function() {
+    displayVersion();
     settingsModal.classList.add('show');
 });
 
